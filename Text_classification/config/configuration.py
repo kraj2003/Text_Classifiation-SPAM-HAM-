@@ -1,4 +1,4 @@
-from text_classification.entity.config_entity import DataIngestionConfig
+from text_classification.entity.config_entity import DataIngestionConfig,DataValidationConfig
 from text_classification.utils.common import *
 from text_classification.constants import *
 from text_classification.exceptions.exceptions import ClassificationException
@@ -21,4 +21,17 @@ class ConfigurationManager:
             source_file_path=config.source_file_path
         )
         return data_ingestion_config
+    
+    def get_data_validation_config(self)->DataValidationConfig:
+        config=self.config.data_validation 
+        schema=self.schema.COLUMNS
+        create_directories([config.root_dir])
+
+        data_validation_config=DataValidationConfig(
+            root_dir=config.root_dir,
+            STATUS_FILE=config.STATUS_FILE,
+            data_dir=config.data_dir,
+            all_schema=schema
+            )
+        return data_validation_config
         

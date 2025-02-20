@@ -4,3 +4,8 @@ data_ingestion:
   root_dir: artifacts/data_ingestion
   source_file_path: E:\Projects\NLP_projects\Text_Classification(SPAM_Ham)word2vec\SMSSpamCollection.txt
 
+data_validation:
+  root_dir: artifacts/data_validation
+  STATUS_FILE: artifacts/data_validation/status.txt
+  data_dir : artifacts/data_ingestion/data.csv
+
