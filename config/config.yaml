@@ -1,0 +1,6 @@
+artifacts_root: artifacts
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  source_file_path: E:\Projects\NLP_projects\Text_Classification(SPAM_Ham)word2vec\SMSSpamCollection.txt
+
