@@ -1,4 +1,4 @@
-artifacts_root: artifacts
+artifacts_root : artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
@@ -9,3 +9,8 @@ data_validation:
   STATUS_FILE: artifacts/data_validation/status.txt
   data_dir : artifacts/data_ingestion/data.csv
 
+data_transformation:
+  root_dir: artifacts/data_transformtion
+  data_path : artifacts/data_ingestion/data.csv
+  final_model: artifacts/final_model
+  preprocessor: artifacts/final_model/preprocessor.pkl

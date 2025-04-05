@@ -12,3 +12,11 @@ class DataValidationConfig:
     STATUS_FILE:Path
     data_dir:Path
     all_schema: dict
+
+@dataclass
+class DataTransformationConfig:
+    root_dir: Path
+    data_path: Path
+    final_model: Path
+    preprocessor: Path
+

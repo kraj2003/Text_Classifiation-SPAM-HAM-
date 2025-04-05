@@ -30,7 +30,7 @@ class DataValidation:
             logging.info(f"Required Number of columns:{columns_name}")
             logging.info(f"Dataframe has columns:{len(data.columns)}")
             for col in all_cols :
-                if col not in columns_name and type(col) != datatype:
+                if col not in columns_name:
                     validation_status=False
                     with open(self.config.STATUS_FILE,'w') as f:
                         f.write(f"Validation_status: {validation_status}")
@@ -38,6 +38,7 @@ class DataValidation:
                     validation_status=True
                     with open(self.config.STATUS_FILE,'w') as f:
                         f.write(f"Validation Status : {validation_status}")
+                print(validation_status)
 
 
             return validation_status
