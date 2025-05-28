@@ -18,25 +18,37 @@ import gensim
 import nltk
 import numpy as np
 
+wv = api.load('word2vec-google-news-300')
+
 class DataTransformation:
     def __init__(self, config=DataTransformationConfig):
         self.config = config
+        self.wv=wv
+        
 
 
     def avg2vec(self,doc,model):
-                # remove out-of-vocabulary words
-                #sent = [word for word in doc if word in model.wv.index_to_key]
-                #print(sent)
-        wv= api.load('word2vec-google-news-300')
-        return np.mean([model.wv[word] for word in doc if word in model.wv.index_to_key],axis=0)
-           #or [np.zeros(len(model.wv.index_to_key))], axis=0)
+        try:        # remove out-of-vocabulary words
+                    #sent = [word for word in doc if word in model.wv.index_to_key]
+                    #print(sent)
+            logging.info("starting loading google ews 300")
+            # wv= api.load('word2vec-google-news-300')
+            logging.info("google news 300 completed")
+            return np.mean([model.wv[word] for word in doc if word in model.wv.index_to_key],axis=0)
+            #or [np.zeros(len(model.wv.index_to_key))], axis=0)
+        except ClassificationException as e:
+            raise(e,sys)
+
 
     def transform_data(self):
         try :
+            # vec_king=wv['king']
             # readind the data
             messages=pd.read_csv(self.config.data_path,sep='\t',names=["label","message"])
             nltk.download('wordnet')
+            logging.info("downloaded wornet")
             lemmatizer=WordNetLemmatizer()
+            logging.info("initialized wordnet lemmatizer")
             corpus = []
             for i in range(0, len(messages)):
                 review = re.sub('[^a-zA-Z]', ' ', str(messages['message'][i]))
@@ -46,19 +58,21 @@ class DataTransformation:
                 review = [lemmatizer.lemmatize(word) for word in review]
                 review = ' '.join(review)
                 corpus.append(review)
-
+            logging.info("lemmetized the corpus")
             [[i,j,k] for i,j,k in zip(list(map(len,corpus)),corpus, messages['message']) if i<1]
             words=[]
             for sent in corpus:
                 sent_token=sent_tokenize(sent)
                 for sent in sent_token:
                     words.append(simple_preprocess(sent))
+            logging.info("simple pprocess done")
             
             model=gensim.models.Word2Vec(words)
-            
+            logging.info("gensim model word2vec completed")
             X=[]
             for i in tqdm(range(len(words))):
                 X.append(self.avg2vec(words[i],model)) 
+            logging.info("avergae w2v completed")
 
             X_new=np.array(X,dtype="object")
             ## Dependent Features
