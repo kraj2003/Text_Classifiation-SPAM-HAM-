@@ -44,7 +44,7 @@ class DataTransformation:
         try :
             # vec_king=wv['king']
             # readind the data
-            messages=pd.read_csv(self.config.data_path,sep='\t',names=["label","message"])
+            messages=pd.read_csv(self.config.data_path)
             nltk.download('wordnet')
             logging.info("downloaded wornet")
             lemmatizer=WordNetLemmatizer()
@@ -77,18 +77,23 @@ class DataTransformation:
             X_new=np.array(X,dtype="object")
             ## Dependent Features
             ## Output Features
+            print(messages['label'].head())
             y = messages[list(map(lambda x: len(x)>0 ,corpus))]
+            print(y)
             y=pd.get_dummies(y['label'])
             y=y.iloc[:,0].values
+            print(y)
 
             ## this is the final independent features
             df=pd.DataFrame()
             for i in range(0,len(X)):
                 df=pd.concat([df,pd.DataFrame(X[i].reshape(1,-1))],ignore_index=True)
 
-            # df.dropna(inplace=True)
             # X=df.drop(['Output'],axis=1)
             # y=df['Output']
+            df['output']=y
+            df['output']=df['output'].astype('int')
+            df.dropna(inplace=True)
             # y=y.astype('int')
 
             return df 

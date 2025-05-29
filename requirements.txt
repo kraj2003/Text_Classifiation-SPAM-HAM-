@@ -9,6 +9,7 @@ ensure
 tqdm
 pyYAML
 joblib
+xgboost
 python-box
 Flask-Cors
 types-PyYAML

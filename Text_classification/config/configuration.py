@@ -1,4 +1,4 @@
-from text_classification.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig
+from text_classification.entity.config_entity import *
 from text_classification.utils.common import *
 from text_classification.constants import *
 from text_classification.exceptions.exceptions import ClassificationException
@@ -49,3 +49,13 @@ class ConfigurationManager:
             preprocessor=config["preprocessor"]
         )
         return data_transformation_config
+    
+    def get_model_trainer_config(self)->ModelTrainerConfig:
+        config=self.config['model_trainer']
+        create_directories([config['root_dir']])
+        model_trainer_config=ModelTrainerConfig(
+            root_dir=config['root_dir'],
+            test_data=config['test_data'],
+            train_data=config['train_data']
+        )
+        return model_trainer_config

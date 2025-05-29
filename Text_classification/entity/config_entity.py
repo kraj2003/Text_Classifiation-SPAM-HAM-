@@ -20,3 +20,9 @@ class DataTransformationConfig:
     final_model: Path
     preprocessor: Path
 
+@dataclass
+class ModelTrainerConfig:
+    root_dir:Path
+    test_data:Path
+    train_data:Path
+
