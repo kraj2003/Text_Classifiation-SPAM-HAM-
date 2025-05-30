@@ -69,16 +69,17 @@ class ModelTrainer:
             for name, model in models.items():
                 try:
                     model.fit(X_train, y_train)
-                    y_pred = model.predict(X_test)
-                    acc = accuracy_score(y_test, y_pred)
-                    f1 = f1_score(y_test, y_pred)
+                    y_pred = model.predict(X_train)
+                    acc = accuracy_score(y_train, y_pred)
+                    f1 = f1_score(y_train, y_pred)
                     results[name] = {
                         "Accuracy": acc,
                         "F1 Score": f1,
-                        "Report": classification_report(y_test, y_pred, output_dict=False)
+                        "Report": classification_report(y_train, y_pred, output_dict=False)
                     }
                     print(f"✅ {name} - Accuracy: {acc:.4f}, F1: {f1:.4f}")
-                    print(f" {name}Classification Report : {classification_report(y_test, y_pred, output_dict=False)} ")
+                    print(f" {name}Classification Report : {classification_report(y_train, y_pred, output_dict=False)} ")
+                    print(y_pred[:20])
 
                     # Update best model if current is better
                     if acc > best_accuracy:

@@ -40,7 +40,6 @@ class ConfigurationManager:
 
         config=self.config["data_transformation"]
         create_directories([config["root_dir"]])
-        create_directories([config["final_model"]])
 
         data_transformation_config=DataTransformationConfig(
             root_dir=config["root_dir"],
@@ -59,3 +58,17 @@ class ConfigurationManager:
             train_data=config['train_data']
         )
         return model_trainer_config
+    
+    def get_model_evaluation_config(self)->ModelEvaluationConfig:
+        config=self.config['model_evaluation']
+        create_directories([config['root_dir']])
+        model_evaluation_config=ModelEvaluationConfig(
+            root_dir=config['root_dir'],
+            test_data_path=config['test_data_path'],
+            model_path = config['model_path'],
+            metric_file_name = config['metric_file_name'],
+            mlflow_uri="https://dagshub.com/kraj2003/Data_science_project.mlflow"
+        )
+
+        return model_evaluation_config
+    

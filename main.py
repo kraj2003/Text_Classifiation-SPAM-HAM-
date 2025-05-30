@@ -3,6 +3,7 @@ from text_classification.pipeline.data_ingestion_pipeline import DataIngestionTr
 from text_classification.pipeline.data_validation_pipeline import DataValidationTrainingPipeline
 from text_classification.pipeline.data_transformation_pipeline import DataTransformationTrainingPipeline
 from text_classification.pipeline.model_trainer_pipeline import ModelTrainingPipeline
+from text_classification.pipeline.model_evaluation import ModelEvalPipeline
 # from text_classification.logging import logging
 import logging
 from text_classification.exceptions.exceptions import ClassificationException
@@ -37,11 +38,20 @@ import sys
 # except Exception as e:
 #         raise ClassificationException(e,sys)
 
-STAGE_NAME = "Model Training stage"
+# STAGE_NAME = "Model Training stage"
+# try:
+#    logging.info(f">>>>>> stage {STAGE_NAME} started <<<<<<") 
+#    model_trainer = ModelTrainingPipeline()
+#    model_trainer.initiate_model_training()
+#    logging.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+# except Exception as e:
+#         raise ClassificationException(e,sys)
+
+STAGE_NAME = "Model Evaluation stage"
 try:
    logging.info(f">>>>>> stage {STAGE_NAME} started <<<<<<") 
-   model_trainer = ModelTrainingPipeline()
-   model_trainer.initiate_model_training()
+   model_trainer = ModelEvalPipeline()
+   model_trainer.initiate_model_eval()
    logging.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
 except Exception as e:
         raise ClassificationException(e,sys)
